@@ -1,0 +1,38 @@
+* Symbol completion
+ - Add symbols from r5rs, Kawa, SISC etc. (stub generation, include in plugin?)
+ - Investigate doc for symbols
+
+* Structure view & completion should show function parameters
+
+* More binding forms - syntax-rules
+
+* Better AST?
+
+* Macro resolution
+
+* Customisable indentation - how to create scheme editor in code style panel?
+
+* Customisable list of keyword names
+
+* Compiler - check for SDK, use built in if not, warn
+
+* Remove Facet
+
+* Runner creation
+
+* Scheme Implementation
+- Symbol resolution (identifier, file)
+- Completion symbols
+- Compiler (SchemeBackendCompiler)
+- REPL (Classpath, Prompt, ProcessHandler, Console highlighting, Console detection)
+- Annotation list?
+
+* Allow case-sensitivity
+
+* Internationalise
+
+* Fix highlighting w/quoting of lists
+
+* REPL
+- prefix output
+- investigate
