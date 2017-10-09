@@ -1,44 +1,28 @@
 Schemely
 ========
 
-A Scheme support mode for IntelliJ 10
+A Scheme support mode for IntelliJ IDEA 2017.2
+### this is fork from https://github.com/cmf/schemely
 -------------------------------------
 
-Schemely is an editing mode for Scheme code in IntelliJ 10. *This code is currently
+Schemely is an editing mode for Scheme code in IntelliJ IDEA 2017.2. *This code is currently
 unstable and only suitable for enthusiastic alpha/beta testers*.
 
 ### Features:
 
 - Basics (paren matching, indenting, syntax highlighting)
 - Symbol navigation/Rename/Find Usages
-- Supports SISC and Kawa
-- Interactive REPL with history, completion and syntax highlighting
-- Compilation
-- Structure view
+- Run the selected script file with ChezScheme
 
-Currently the code is undergoing some large changes, and lots of things don't work:
+### How-to:
+- install ChezScheme and can run in terminal
+- create any type project in IDEA
+- create Scheme script file in src directory
+- create run configuration (the quickly way is click right mouse key and select Run 'app' or something like this) 
+- done.
 
-- Kawa support is almost totally broken *(in fact it's currently disabled)*
-- Symbol resolution doesn't work across files
-- Symbol resolution (which affects navigation, rename and find usages) is currently broken
-  in the face of macros
-- Structure view is almost totally broken
+### License
+I don't known the origin License agreement, therefor, this project is under MIT License now.
 
-Fixing at least the first 2 of these is my top priority and hopefully won't take too long.
-
-There is also a long list of planned features:
-
-- Finish running/compilation support
-- Proper support for modules
-- Customisable indentation
-- Cross-file symbol resolution (support import, load and friends)
-- Symbol resolution in the presence of macros (this is kind of hard)
-- Macro support (expand macro)
-- Extract function, extract variable, extract let binding
-- Paredit type support
-- Resolution of Java symbols for JVM-based Schemes
-- Racket support
-- Support for quirks of various implementations (case sensitivity etc)
-- Debugging support
-- Support for Android development with Kawa
-- Documentation
+The origin author is:
+Colin Fleming: https://github.com/cmf
