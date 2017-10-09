@@ -73,6 +73,9 @@
     <methodNavigationOffsetProvider implementation="schemely.navigation.SchemeNavigationOffsetProvider"/>
     <configurationType implementation="schemely.actions.SchemeRun"/>
     <runConfigurationProducer implementation="schemely.actions.SchemeRunProducer"/>
+    <moduleType id="Scheme" implementationClass="schemely.scheme.SchemeModule"/>
+    <moduleBuilder builderClass="schemely.scheme.SchemeModuleBuilder"/>
+
   </extensions>
 
   <project-components>
