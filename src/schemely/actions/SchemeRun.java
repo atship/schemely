@@ -55,7 +55,7 @@ public class SchemeRun extends ConfigurationTypeBase {
                             protected ProcessHandler startProcess() throws ExecutionException {
                                 VirtualFile virtualFile = FileEditorManager.getInstance(project).getSelectedFiles()[0];
                                 Module module = ModuleUtilCore.findModuleForFile(virtualFile, project);
-                                String url = virtualFile.getPresentableUrl();
+                                String url = virtualFile.getPresentableUrl().replace("\\", "/");
                                 String workingDir = project.getBasePath() + "/" + module.getName() + "/src/";
                                 url = url.replace(workingDir, "");
 

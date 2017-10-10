@@ -51,7 +51,7 @@ public abstract class NewSchemeActionBase extends CreateElementActionBase
 
   protected abstract String getDialogTitle();
 
-  public void update(AnActionEvent event)
+  /*public void update(AnActionEvent event)
   {
     super.update(event);
     Presentation presentation = event.getPresentation();
@@ -81,7 +81,7 @@ public abstract class NewSchemeActionBase extends CreateElementActionBase
       presentation.setEnabled(true);
       presentation.setVisible(true);
     }
-  }
+  }*/
 
   public static boolean isUnderSourceRoots(AnActionEvent e)
   {
@@ -124,9 +124,15 @@ public abstract class NewSchemeActionBase extends CreateElementActionBase
                                                   @NonNls String templateName,
                                                   @NonNls String... parameters) throws IncorrectOperationException
   {
+    final String fileName;
+    if (!className.endsWith(".ss") && !className.endsWith(".scm")) {
+      fileName = className + ".ss";
+    } else {
+      fileName = className;
+    }
     return SchemeTemplatesFactory.createFromTemplate(directory,
                                                      className,
-                                                     className + SCHEME_EXTENSION,
+                                                     fileName,
                                                      templateName,
                                                      parameters);
   }
@@ -149,16 +155,21 @@ public abstract class NewSchemeActionBase extends CreateElementActionBase
 //      throw new IncorrectOperationException(SchemeBundle.message("0.is.not.an.identifier", name));
 //    }
 
-    String fileName = name + "." + SCHEME_EXTENSION;
+    final String fileName;
+    if (!name.endsWith(".ss") && !name.endsWith(".scm")) {
+      fileName = name + ".ss";
+    } else {
+      fileName = name;
+    }
     directory.checkCreateFile(fileName);
 
-    PsiNameHelper helper = JavaPsiFacade.getInstance(directory.getProject()).getNameHelper();
+    /*PsiNameHelper helper = JavaPsiFacade.getInstance(directory.getProject()).getNameHelper();
     PsiPackage aPackage = JavaDirectoryService.getInstance().getPackage(directory);
     String qualifiedName = aPackage == null ? null : aPackage.getQualifiedName();
     if (!StringUtil.isEmpty(qualifiedName) && !helper.isQualifiedName(qualifiedName))
     {
       throw new IncorrectOperationException("Cannot create class in invalid package: '" + qualifiedName + "'");
-    }
+    }*/
   }
 
 }
