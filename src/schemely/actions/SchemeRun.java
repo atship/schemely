@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import schemely.SchemeIcons;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -58,9 +59,9 @@ public class SchemeRun extends ConfigurationTypeBase {
                                 String workingDir = project.getBasePath() + "/" + module.getName() + "/src/";
                                 url = url.replace(workingDir, "");
 
-                                GeneralCommandLine generalCommandLine = new GeneralCommandLine("scheme", "--script", url);
+                                GeneralCommandLine generalCommandLine = new GeneralCommandLine("bash", "-c", "scheme --script " + url);
+                                generalCommandLine.setCharset(Charset.forName("UTF-8"));
                                 generalCommandLine.setWorkDirectory(workingDir);
-                                generalCommandLine.createProcess();
                                 return new ColoredProcessHandler(generalCommandLine);
                             }
                         };
