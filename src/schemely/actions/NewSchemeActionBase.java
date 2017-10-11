@@ -51,7 +51,7 @@ public abstract class NewSchemeActionBase extends CreateElementActionBase
 
   protected abstract String getDialogTitle();
 
-  /*public void update(AnActionEvent event)
+  public void update(AnActionEvent event)
   {
     super.update(event);
     Presentation presentation = event.getPresentation();
@@ -81,7 +81,7 @@ public abstract class NewSchemeActionBase extends CreateElementActionBase
       presentation.setEnabled(true);
       presentation.setVisible(true);
     }
-  }*/
+  }
 
   public static boolean isUnderSourceRoots(AnActionEvent e)
   {

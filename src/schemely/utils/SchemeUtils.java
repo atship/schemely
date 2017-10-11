@@ -1,9 +1,9 @@
 package schemely.utils;
 
-import com.intellij.openapi.module.JavaModuleType;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.module.ModuleTypeManager;
+import schemely.scheme.SchemeModule;
 
 
 public class SchemeUtils
@@ -17,6 +17,6 @@ public class SchemeUtils
       return false;
     }
     ModuleType type = ModuleTypeManager.getInstance().findByID(module.getModuleTypeName());
-    return type instanceof JavaModuleType || "".equals(type.getId());
+    return type instanceof SchemeModule || "".equals(type.getId());
   }
 }
