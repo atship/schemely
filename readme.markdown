@@ -16,7 +16,7 @@ unstable and only suitable for enthusiastic alpha/beta testers*.
 
 ### How-to:
 - install ChezScheme and can run in terminal
-- create any type project in IDEA
+- create scheme type project in IDEA with different module name (under more settings)
 - create Scheme script file in src directory
 - create run configuration (the quickly way is click right mouse key and select Run 'app' or something like this) 
 - done.

@@ -3,5 +3,6 @@ out
 test-output
 jflex.log
 schemely.zip
+schemely.jar
 src/schemely/conversion/JavaToScala.scala
 
