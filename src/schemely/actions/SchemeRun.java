@@ -59,7 +59,13 @@ public class SchemeRun extends ConfigurationTypeBase {
                                 String workingDir = project.getBasePath() + "/" + module.getName() + "/src/";
                                 url = url.replace(workingDir, "");
 
-                                GeneralCommandLine generalCommandLine = new GeneralCommandLine("bash", "-c", "source ~/.bashrc; scheme --libdirs \\$CHEZSCHEMELIBDIRS --script " + url);
+                                String os = System.getProperty("os.name");
+                                final GeneralCommandLine generalCommandLine;
+                                if (os.toLowerCase().startsWith("win")) {
+                                    generalCommandLine = new GeneralCommandLine("bash", "-c", "source ~/.bashrc; scheme --libdirs \\$CHEZSCHEMELIBDIRS --script " + url);
+                                } else {
+                                    generalCommandLine = new GeneralCommandLine("bash", "-c", "scheme --libdirs $CHEZSCHEMELIBDIRS --script " + url);
+                                }
                                 generalCommandLine.setCharset(Charset.forName("UTF-8"));
                                 generalCommandLine.setWorkDirectory(workingDir);
                                 return new ColoredProcessHandler(generalCommandLine);
