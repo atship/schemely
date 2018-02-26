@@ -62,7 +62,12 @@ public class SchemeRun extends ConfigurationTypeBase {
                                 String os = System.getProperty("os.name");
                                 final GeneralCommandLine generalCommandLine;
                                 if (os.toLowerCase().startsWith("win")) {
-                                    generalCommandLine = new GeneralCommandLine("bash", "-c", "source ~/.bashrc; scheme --libdirs \\$CHEZSCHEMELIBDIRS --script " + url);
+//                                    generalCommandLine = new GeneralCommandLine("bash", "-c", "source ~/.bashrc; scheme --libdirs \\$CHEZSCHEMELIBDIRS --script " + url);
+                                    PtyCommandLine commandLine = new PtyCommandLine();
+                                    commandLine.setConsoleMode(true);
+                                    commandLine.setExePath("bash");
+                                    commandLine.addParameters("-c", "source ~/.bashrc; scheme --libdirs \\$CHEZSCHEMELIBDIRS --script " + url);
+                                    generalCommandLine = commandLine;
                                 } else {
                                     generalCommandLine = new GeneralCommandLine("bash", "-c", "scheme --libdirs $CHEZSCHEMELIBDIRS --script " + url);
                                 }
