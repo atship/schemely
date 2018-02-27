@@ -201,7 +201,7 @@ public class SchemeLexer extends LexerBase {
     }
 
     protected boolean isIdentifierInitial(char ch) {
-        return Character.isLetter(ch) || in(ch, "!$%&*/:<=>?~_^@");
+        return Character.isLetter(ch) || in(ch, ".!$%&*/:<=>?~_^@");
     }
 
     protected boolean isIdentifierSubsequent(char ch) {
