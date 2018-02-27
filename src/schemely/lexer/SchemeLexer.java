@@ -129,7 +129,7 @@ public class SchemeLexer extends LexerBase {
                     cursor++;
                     readSingleChar(Tokens.CHAR_LITERAL);
                 } else if (next == '!') {
-                    if (Character.isWhitespace(peek(1)) || (peek(1) == '/')) {
+                    if (true || Character.isWhitespace(peek(1)) || (peek(1) == '/')) {
                         readSingleLineComment();
                     } else {
                         bad();
