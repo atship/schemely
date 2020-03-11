@@ -9,13 +9,12 @@
   -->
   <name>Schemely</name>
   <id>schemely</id>
-  <description>Plugin for Scheme language support</description>
+  <description>The Plugin for ChezScheme language support.</description>
   <category>Custom Languages</category>
   <version>0.1.0</version>
   <vendor url="http://colinfleming.net">Colin Fleming</vendor>
 
   <extensions defaultExtensionNs="com.intellij">
-    <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
     <fileTypeFactory implementation="schemely.file.SchemeFileTypeLoader"/>
     <lang.braceMatcher language="Scheme"
                        implementationClass="schemely.highlighter.SchemeBraceMatcher"/>

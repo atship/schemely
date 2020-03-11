@@ -38,91 +38,6 @@ public class SchemeIdentifierSearch implements QueryExecutor<PsiReference, Refer
     Project project = DataKeys.PROJECT.getData(dataContext);
   }
 
-  public boolean execute(@NotNull final ReferencesSearch.SearchParameters queryParameters,
-                         @NotNull final Processor<PsiReference> consumer)
-  {
-    final PsiElement refElement = queryParameters.getElementToSearch();
-    Project project = refElement.getProject();
-    PsiManagerEx manager = (PsiManagerEx) PsiManager.getInstance(project);
-
-    if (refElement instanceof SchemeIdentifier)
-    {
-      final String name = ((SchemeIdentifier) refElement).getName();
-      if (name == null)
-      {
-        return true;
-      }
-
-      SearchScope searchScope = ApplicationManager.getApplication().runReadAction(new Computable<SearchScope>()
-      {
-        public SearchScope compute()
-        {
-          return queryParameters.getEffectiveSearchScope();
-        }
-      });
-
-      final TextOccurenceProcessor processor = new TextOccurenceProcessor()
-      {
-        public boolean execute(PsiElement element, int offsetInElement)
-        {
-          ProgressManager.getInstance().checkCanceled();
-          PsiReference ref = element.getReference();
-          if ((ref != null) && ref.getRangeInElement().contains(offsetInElement) && ref.isReferenceTo(refElement))
-          {
-            return consumer.process(ref);
-          }
-          return true;
-        }
-      };
-
-      short
-        searchContext =
-        UsageSearchContext.IN_CODE | UsageSearchContext.IN_FOREIGN_LANGUAGES | UsageSearchContext.IN_COMMENTS;
-
-      final boolean caseSensitively = false;
-
-      if (searchScope instanceof GlobalSearchScope)
-      {
-        StringSearcher searcher = new StringSearcher(name, caseSensitively, true);
-
-        return processElementsWithTextInGlobalScope(processor,
-                                                    (GlobalSearchScope) searchScope,
-                                                    searcher,
-                                                    searchContext,
-                                                    caseSensitively,
-                                                    manager);
-      }
-      else
-      {
-        LocalSearchScope scope = (LocalSearchScope) searchScope;
-        PsiElement[] scopeElements = scope.getScope();
-        final boolean ignoreInjectedPsi = scope.isIgnoreInjectedPsi();
-
-        for (final PsiElement scopeElement : scopeElements)
-        {
-          return ApplicationManager.getApplication().runReadAction(new Computable<Boolean>()
-          {
-            public Boolean compute()
-            {
-              StringSearcher searcher = new StringSearcher(name, caseSensitively, true);
-
-              ProgressManager progressManager = ProgressManager.getInstance();
-
-              return LowLevelSearchUtil.processElementsContainingWordInElement(processor,
-                                                                               scopeElement,
-                                                                               searcher,
-                                                                               ignoreInjectedPsi,
-                                                                               progressManager.getProgressIndicator());
-            }
-          }).booleanValue();
-        }
-        return true;
-      }
-    }
-
-    return true;
-  }
-
   private boolean processElementsWithTextInGlobalScope(final TextOccurenceProcessor processor,
                                                        final GlobalSearchScope scope,
                                                        final StringSearcher searcher,
@@ -227,5 +142,89 @@ public class SchemeIdentifierSearch implements QueryExecutor<PsiReference, Refer
       }
       manager.finishBatchFilesProcessingMode();
     }
+  }
+
+  @Override
+  public boolean execute(@NotNull ReferencesSearch.SearchParameters queryParameters, @NotNull Processor<? super PsiReference> consumer) {
+    final PsiElement refElement = queryParameters.getElementToSearch();
+    Project project = refElement.getProject();
+    PsiManagerEx manager = (PsiManagerEx) PsiManager.getInstance(project);
+
+    if (refElement instanceof SchemeIdentifier)
+    {
+      final String name = ((SchemeIdentifier) refElement).getName();
+      if (name == null)
+      {
+        return true;
+      }
+
+      SearchScope searchScope = ApplicationManager.getApplication().runReadAction(new Computable<SearchScope>()
+      {
+        public SearchScope compute()
+        {
+          return queryParameters.getEffectiveSearchScope();
+        }
+      });
+
+      final TextOccurenceProcessor processor = new TextOccurenceProcessor()
+      {
+        public boolean execute(PsiElement element, int offsetInElement)
+        {
+          ProgressManager.getInstance().checkCanceled();
+          PsiReference ref = element.getReference();
+          if ((ref != null) && ref.getRangeInElement().contains(offsetInElement) && ref.isReferenceTo(refElement))
+          {
+            return consumer.process(ref);
+          }
+          return true;
+        }
+      };
+
+      short
+              searchContext =
+              UsageSearchContext.IN_CODE | UsageSearchContext.IN_FOREIGN_LANGUAGES | UsageSearchContext.IN_COMMENTS;
+
+      final boolean caseSensitively = false;
+
+      if (searchScope instanceof GlobalSearchScope)
+      {
+        StringSearcher searcher = new StringSearcher(name, caseSensitively, true);
+
+        return processElementsWithTextInGlobalScope(processor,
+                (GlobalSearchScope) searchScope,
+                searcher,
+                searchContext,
+                caseSensitively,
+                manager);
+      }
+      else
+      {
+        LocalSearchScope scope = (LocalSearchScope) searchScope;
+        PsiElement[] scopeElements = scope.getScope();
+        final boolean ignoreInjectedPsi = scope.isIgnoreInjectedPsi();
+
+        for (final PsiElement scopeElement : scopeElements)
+        {
+          return ApplicationManager.getApplication().runReadAction(new Computable<Boolean>()
+          {
+            public Boolean compute()
+            {
+              StringSearcher searcher = new StringSearcher(name, caseSensitively, true);
+
+              ProgressManager progressManager = ProgressManager.getInstance();
+
+              return LowLevelSearchUtil.processElementsContainingWordInElement(processor,
+                      scopeElement,
+                      searcher,
+                      ignoreInjectedPsi,
+                      progressManager.getProgressIndicator());
+            }
+          }).booleanValue();
+        }
+        return true;
+      }
+    }
+
+    return true;
   }
 }

@@ -11,6 +11,8 @@ import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.codeStyle.CodeStyleSettings;
 import com.intellij.psi.codeStyle.CodeStyleSettingsManager;
 
+import static com.intellij.util.indexing.IndexingDataKeys.PSI_FILE;
+
 class JavaToSchemeAction extends AnAction
 {
   @Override
@@ -21,7 +23,7 @@ class JavaToSchemeAction extends AnAction
     try
     {
       DataContext dataContext = e.getDataContext();
-      Object data = dataContext.getData(DataConstants.PSI_FILE);
+      Object data = dataContext.getData("");
       if (data instanceof PsiJavaFile)
       {
         PsiJavaFile file = (PsiJavaFile) data;
@@ -48,7 +50,7 @@ class JavaToSchemeAction extends AnAction
   @Override
   public void actionPerformed(AnActionEvent e)
   {
-    Object data = e.getDataContext().getData(DataConstants.PSI_FILE);
+    Object data = e.getDataContext().getData("");
     if (data instanceof PsiJavaFile)
     {
       final PsiJavaFile file = (PsiJavaFile) data;

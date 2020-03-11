@@ -5,4 +5,4 @@ jflex.log
 schemely.zip
 schemely.jar
 src/schemely/conversion/JavaToScala.scala
-
+.DS_Store

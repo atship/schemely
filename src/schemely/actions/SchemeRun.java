@@ -32,7 +32,7 @@ public class SchemeRun extends ConfigurationTypeBase {
             @NotNull
             @Override
             public RunConfiguration createTemplateConfiguration(@NotNull final Project project) {
-                return new ModuleBasedConfiguration<RunConfigurationModule>(new RunConfigurationModule(project), this) {
+                return new ModuleBasedConfiguration<RunConfigurationModule, ConfigurationFactory>(new RunConfigurationModule(project), this) {
 
                     @NotNull
                     @Override
@@ -56,8 +56,7 @@ public class SchemeRun extends ConfigurationTypeBase {
                                 VirtualFile virtualFile = FileEditorManager.getInstance(project).getSelectedFiles()[0];
                                 Module module = ModuleUtilCore.findModuleForFile(virtualFile, project);
                                 String url = virtualFile.getPresentableUrl().replace("\\", "/");
-                                String workingDir = project.getBasePath() + "/" + module.getName() + "/src/";
-                                url = url.replace(workingDir, "");
+                                String workingDir = virtualFile.getParent().getPresentableUrl().replace("\\", "/");
 
                                 String os = System.getProperty("os.name");
                                 final GeneralCommandLine generalCommandLine;
@@ -69,7 +68,7 @@ public class SchemeRun extends ConfigurationTypeBase {
                                     commandLine.addParameters("--script", url);
                                     generalCommandLine = commandLine;
                                 } else {
-                                    generalCommandLine = new GeneralCommandLine("bash", "-c", "scheme --libdirs $CHEZSCHEMELIBDIRS --script " + url);
+                                    generalCommandLine = new GeneralCommandLine("bash", "-c", "cat " + url + " | scheme --libdirs $CHEZSCHEMELIBDIRS::lib -q ");
                                 }
                                 generalCommandLine.setCharset(Charset.forName("UTF-8"));
                                 generalCommandLine.setWorkDirectory(workingDir);
@@ -81,11 +80,6 @@ public class SchemeRun extends ConfigurationTypeBase {
                     @Override
                     public Collection<Module> getValidModules() {
                         return Arrays.asList(ModuleManager.getInstance(project).getModules());
-                    }
-
-                    @Override
-                    public boolean isCompileBeforeLaunchAddedByDefault() {
-                        return false;
                     }
 
                     @Override
